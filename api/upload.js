@@ -30,18 +30,25 @@ export default async function handler(req, res) {
 
     const filename = fields.filename || files.file.originalFilename;
     const caption = fields.caption || "";
-    const fileStream = fs.createReadStream(files.file.filepath);
+    
+    // Read file as buffer instead of stream for better compatibility
+    const fileBuffer = fs.readFileSync(files.file.filepath);
 
-    // 2. Send file to Telegram channel
+    // 2. Send file to Telegram channel - FIXED SECTION
     const tgForm = new FormData();
-    tgForm.append("chat_id", process.env.CHANNEL_ID); // channel ID (e.g. -1001234567890)
-    tgForm.append("document", fileStream, filename);
+    tgForm.append("chat_id", process.env.CHANNEL_ID);
+    tgForm.append("document", fileBuffer, filename);
     if (caption) tgForm.append("caption", caption);
 
     const tgResp = await axios.post(
       `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendDocument`,
       tgForm,
-      { headers: tgForm.getHeaders() }
+      { 
+        headers: {
+          ...tgForm.getHeaders(),
+          'Content-Type': 'multipart/form-data'
+        }
+      }
     );
 
     if (!tgResp.data.ok) {
@@ -62,7 +69,10 @@ export default async function handler(req, res) {
     ]);
     if (error) throw error;
 
-    // 4. Respond success
+    // 4. Clean up temporary file
+    fs.unlinkSync(files.file.filepath);
+
+    // 5. Respond success
     return res.json({
       success: true,
       file: {
