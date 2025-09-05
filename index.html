@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Telegram Drive (Demo)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>My Telegram Drive (Demo)</h1>
+
+    <section class="card">
+      <h2>Upload file</h2>
+      <input id="fileInput" type="file" />
+      <input id="filename" type="text" placeholder="Optional: file name" />
+      <input id="caption" type="text" placeholder="Caption (optional)" />
+      <div class="row">
+        <button id="uploadBtn">Upload to Telegram</button>
+        <span id="status" class="muted"></span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Files</h2>
+      <div style="margin-bottom:8px">
+        <button id="refreshBtn">Refresh</button>
+      </div>
+      <div id="filesContainer" class="files">Loading…</div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
