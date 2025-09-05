@@ -1,0 +1,8 @@
+:root{--bg:#fff;--muted:#666}
+body{font-family:system-ui,Segoe UI,Roboto,Arial; background:var(--bg); color:#111; margin:24px}
+.container{max-width:900px;margin:0 auto}
+.card{border:1px solid #eee;padding:16px;border-radius:8px;margin-bottom:16px}
+input[type="text"], input[type="file"]{display:block;width:100%;margin:8px 0;padding:8px;border-radius:6px;border:1px solid #ddd}
+button{padding:8px 12px;border-radius:6px;border:1px solid #ddd;background:#f7f7f7;cursor:pointer}
+.muted{color:var(--muted)}
+.file-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid #f6f6f6}
